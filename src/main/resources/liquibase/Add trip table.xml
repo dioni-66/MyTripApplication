@@ -1,0 +1,50 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet id="Add trip table" author="dioncakeri" runOnChange="true">
+
+        <sql>
+            DROP TABLE IF EXISTS trip_reason;
+
+            CREATE TABLE trip_reason (
+                                         id int PRIMARY KEY auto_increment,
+                                         reason varchar(10)
+            );
+
+            INSERT INTO trip_reason(reason) VALUES("Meeting");
+            INSERT INTO trip_reason(reason) VALUES("Training");
+            INSERT INTO trip_reason(reason) VALUES("Project");
+            INSERT INTO trip_reason(reason) VALUES("Workshop");
+            INSERT INTO trip_reason(reason) VALUES("Event");
+            INSERT INTO trip_reason(reason) VALUES("Other");
+
+            DROP TABLE IF EXISTS trip_status;
+
+            CREATE TABLE trip_status (
+                                         id int PRIMARY KEY auto_increment,
+                                         status varchar(20)
+            );
+
+            INSERT INTO trip_status(status) VALUES("CREATED");
+            INSERT INTO trip_status(status) VALUES("WAITING FOR APPROVAL");
+            INSERT INTO trip_status(status) VALUES("APPROVED");
+            INSERT INTO trip_status(status) VALUES("DISAPPROVED");
+
+            DROP TABLE IF EXISTS trip;
+
+            CREATE TABLE trip (
+                                  id int PRIMARY KEY auto_increment,
+                                  reason_id int,
+                                  trip_description varchar(255),
+                                  trip_from varchar(50),
+                                  trip_to varchar(50),
+                                  departure_date date,
+                                  arrival_date date,
+                                  status_id int,
+                                  foreign key (reason_id) references trip_reason (id),
+                                  foreign key (status_id) references trip_status (id)
+            );
+        </sql>
+
+    </changeSet>
+</databaseChangeLog>

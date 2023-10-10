@@ -5,7 +5,7 @@ import com.mytrip.pojo.ApplicationUserDetails;
 import com.mytrip.request.AuthenticationRequestDTO;
 import com.mytrip.response.AuthenticationResponseDTO;
 import com.mytrip.service.MyTripUserDetailsService;
-import com.mytrip.service.UserService;
+import com.mytrip.service.UserServiceimpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +29,7 @@ public class AuthenticationController {
     private JwtTokenUtil jwtTokenUtil;
 
     @Autowired
-    private UserService userService;
+    private UserServiceimpl userService;
 
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponseDTO> login(final HttpServletResponse response, @RequestBody final AuthenticationRequestDTO authenticationRequestDTO) {

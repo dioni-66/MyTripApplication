@@ -7,7 +7,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "user")
-@NamedQuery(name = "UserEntity.findByUsername", query = "SELECT u FROM UserEntity u WHERE u.username =: username")
+@NamedQuery(name = "UserEntity.findByUsername", query = "SELECT u FROM UserEntity u JOIN FETCH u.authorities WHERE u.username =: username")
 public class UserEntity {
     private long id;
     private String email;
