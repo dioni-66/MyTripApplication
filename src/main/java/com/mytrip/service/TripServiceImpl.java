@@ -9,6 +9,7 @@ import com.mytrip.pojo.TripStatus;
 import com.mytrip.request.ApproveTripRequestDTO;
 import com.mytrip.request.CreateTripRequestDTO;
 import com.mytrip.request.DeleteTripRequestDTO;
+import com.mytrip.request.UpdateTripRequestDTO;
 import com.mytrip.response.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -105,5 +106,16 @@ public class TripServiceImpl implements TripService {
         return new ApproveTripResponseDTO(String.format("Trip status changed to %s", approveTripRequestDTO.getTripStatus().getValue()));
     }
 
+    @Override
+    public UpdateTripResponseDTO addFlight(int id, int flightId) {
+        TripEntity tripEntity = em.find(TripEntity.class, flightId);
+        if(tripEntity != null){
+            return new UpdateTripResponseDTO("This flight id exists for this trip!");
+        }
+        TypedQuery<TripEntity> tripEntityTypedQuery = em.createNamedQuery("TripEntity.updateFlightId", TripEntity.class);
+        tripEntityTypedQuery.setParameter("flightId", flightId);
+        tripEntityTypedQuery.setParameter("id", id);
+        return new UpdateTripResponseDTO("Flight added successfully");
+    }
 
 }

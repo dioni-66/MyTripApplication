@@ -2,19 +2,15 @@ package com.mytrip.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
-
 import java.util.Date;
 
 @Data
-public class Trip {
+public class Flight {
     @JsonIgnore
     private int id;
-    private TripReason tripReason;
-    private String tripDescription;
-    private String tripFrom;
-    private String tripTo;
+    private String flightNumber;
+    private String flightFrom;
+    private String flightTo;
     private Date departureDate;
     private Date arrivalDate;
-    private TripStatus tripStatus;
-    private Flight flight;
 }

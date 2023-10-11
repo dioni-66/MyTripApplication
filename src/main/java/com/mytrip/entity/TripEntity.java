@@ -1,5 +1,10 @@
 package com.mytrip.entity;
 
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
@@ -8,6 +13,7 @@ import java.util.Objects;
 @Table(name = "trip")
 @NamedQuery(name = "TripEntity.deleteTrip", query = "DELETE FROM TripEntity t WHERE t.id =: id")
 @NamedQuery(name = "TripEntity.loadTrip", query = "SELECT t FROM TripEntity t WHERE t.id =: id")
+@NamedQuery(name = "TripEntity.updateFlightId", query = "UPDATE TripEntity t SET t.flightEntity.id = :flight_Id WHERE t.id = :id")
 public class TripEntity {
     private int id;
     private String tripDescription;
@@ -17,6 +23,7 @@ public class TripEntity {
     private Date arrivalDate;
     private TripReasonEntity tripReason;
     private TripStatusEntity tripStatus;
+    private FlightEntity flightEntity;
 
     @Id
     @Column(name = "id")
@@ -110,4 +117,13 @@ public class TripEntity {
     public void setTripStatus(TripStatusEntity tripStatus) {
         this.tripStatus = tripStatus;
     }
+
+    @OneToOne
+    @JoinColumn(name = "flight_id", referencedColumnName = "id")
+    public FlightEntity getFlightEntity() {
+        return flightEntity;
+    }
+
+    public void setFlightEntity(FlightEntity flightEntity) { this.flightEntity = flightEntity; }
+
 }

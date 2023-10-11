@@ -3,6 +3,7 @@ package com.mytrip.controller;
 import com.mytrip.request.ApproveTripRequestDTO;
 import com.mytrip.request.CreateTripRequestDTO;
 import com.mytrip.request.DeleteTripRequestDTO;
+import com.mytrip.request.UpdateTripRequestDTO;
 import com.mytrip.response.*;
 import com.mytrip.service.TripService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,5 +51,12 @@ public class TripController {
     public ResponseEntity<ApproveTripResponseDTO> deleteTrip(@RequestBody ApproveTripRequestDTO approveTripRequestDTO){
         ApproveTripResponseDTO approveTripResponseDTO = tripService.approveTrip(approveTripRequestDTO);
         return new ResponseEntity<>(approveTripResponseDTO, HttpStatus.OK);
+    }
+
+    @PutMapping("/add-flight/{id}/{flightId}")
+    @Secured("ROLE_USER")
+    public ResponseEntity<UpdateTripResponseDTO> addFlight(@PathVariable("id") int id, @PathVariable("flightId") int flightId){
+        UpdateTripResponseDTO addFlightResponseDTO = tripService.addFlight(id, flightId);
+        return new ResponseEntity<>(addFlightResponseDTO, HttpStatus.OK);
     }
 }
