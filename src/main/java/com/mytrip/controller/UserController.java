@@ -23,7 +23,6 @@ public class UserController {
 
     @PostMapping("/create")
     @Secured("ROLE_ADMIN")
-    //TODO
     public ResponseEntity<CreateUserResponseDTO> createUser(@RequestBody CreateUserRequestDTO createUserRequestDTO){
         CreateUserResponseDTO createUserResponseDTO = userService.createUser(createUserRequestDTO);
         return new ResponseEntity<>(createUserResponseDTO, HttpStatus.OK);

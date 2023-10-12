@@ -1,10 +1,5 @@
 package com.mytrip.entity;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
@@ -13,7 +8,8 @@ import java.util.Objects;
 @Table(name = "trip")
 @NamedQuery(name = "TripEntity.deleteTrip", query = "DELETE FROM TripEntity t WHERE t.id =: id")
 @NamedQuery(name = "TripEntity.loadTrip", query = "SELECT t FROM TripEntity t WHERE t.id =: id")
-@NamedQuery(name = "TripEntity.updateFlightId", query = "UPDATE TripEntity t SET t.flightEntity.id = :flight_Id WHERE t.id = :id")
+@NamedQuery(name = "TripEntity.filterByStatus", query = "SELECT t FROM TripEntity t WHERE t.tripStatus.status =: status")
+@NamedQuery(name = "TripEntity.filterByReason", query = "SELECT t FROM TripEntity t WHERE t.tripReason.reason =: reason")
 public class TripEntity {
     private int id;
     private String tripDescription;

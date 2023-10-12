@@ -1,0 +1,25 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet id="Add flight table" author="dioncakeri" runOnChange="true">
+
+        <sql>
+
+            DROP TABLE IF EXISTS flight;
+
+            CREATE TABLE flight (
+                                  id int PRIMARY KEY auto_increment,
+                                  flight_number varchar(50),
+                                  flight_from varchar(50),
+                                  flight_to varchar(50),
+                                  departure_date timestamp,
+                                  arrival_date timestamp
+            );
+
+            ALTER TABLE trip
+            ADD COLUMN flight_id INT(11) DEFAULT NULL,
+            ADD CONSTRAINT trip_flight_id_FK FOREIGN KEY (flight_id) REFERENCES `flight` (`id`);
+        </sql>
+
+    </changeSet>
+</databaseChangeLog>

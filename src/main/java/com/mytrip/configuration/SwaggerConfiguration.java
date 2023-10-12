@@ -55,7 +55,7 @@ public class SwaggerConfiguration {
         Info info = new Info()
                 .title("MyTrip Application API")
                 .description("This site provides an overview of all application endpoints")
-                .license(new License().url("http://www.lufthansa-industry-solutions.com/"))
+                .license(new License().url("http://www.google.com/"))
                 .version(applicationVersion);
 
         SecurityRequirement securityRequirement = new SecurityRequirement()

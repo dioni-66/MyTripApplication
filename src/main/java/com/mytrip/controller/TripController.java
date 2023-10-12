@@ -3,7 +3,7 @@ package com.mytrip.controller;
 import com.mytrip.request.ApproveTripRequestDTO;
 import com.mytrip.request.CreateTripRequestDTO;
 import com.mytrip.request.DeleteTripRequestDTO;
-import com.mytrip.request.UpdateTripRequestDTO;
+import com.mytrip.request.FilterTripsRequestDTO;
 import com.mytrip.response.*;
 import com.mytrip.service.TripService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @Transactional
@@ -22,7 +24,7 @@ public class TripController {
     private TripService tripService;
 
     @PostMapping("/create")
-    public ResponseEntity<CreateTripResponseDTO> createTrip(@RequestBody CreateTripRequestDTO createTripRequestDTO){
+    public ResponseEntity<CreateTripResponseDTO> createTrip(@Valid @RequestBody CreateTripRequestDTO createTripRequestDTO){
         CreateTripResponseDTO createTripResponseDTO = tripService.createTrip(createTripRequestDTO);
         return new ResponseEntity<>(createTripResponseDTO, HttpStatus.OK);
     }
@@ -53,10 +55,16 @@ public class TripController {
         return new ResponseEntity<>(approveTripResponseDTO, HttpStatus.OK);
     }
 
-    @PutMapping("/add-flight/{id}/{flightId}")
+    @PutMapping("/add-flight/{tripId}/{flightId}")
     @Secured("ROLE_USER")
-    public ResponseEntity<UpdateTripResponseDTO> addFlight(@PathVariable("id") int id, @PathVariable("flightId") int flightId){
-        UpdateTripResponseDTO addFlightResponseDTO = tripService.addFlight(id, flightId);
+    public ResponseEntity<UpdateTripResponseDTO> addFlight(@PathVariable("tripId") int tripId, @PathVariable("flightId") int flightId){
+        UpdateTripResponseDTO addFlightResponseDTO = tripService.addFlight(tripId, flightId);
         return new ResponseEntity<>(addFlightResponseDTO, HttpStatus.OK);
+    }
+
+    @PostMapping("/filter-trip")
+    public ResponseEntity<FilterTripsResponseDTO> filterTrips(@RequestBody FilterTripsRequestDTO filterTripsRequestDTO){
+        FilterTripsResponseDTO filterTripsResponseDTO = tripService.filterTrips(filterTripsRequestDTO);
+        return new ResponseEntity<>(filterTripsResponseDTO, HttpStatus.OK);
     }
 }

@@ -20,6 +20,7 @@ public class UserEntity {
     private List<AuthorityEntity> authorities;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     public long getId() {
         return id;
@@ -103,7 +104,7 @@ public class UserEntity {
      * The roles that apply to the user.
      * @return List of authorities
      */
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinTable(name = "USER_AUTHORITY", joinColumns = {
             @JoinColumn(name = "USER_ID", referencedColumnName = "ID")}, inverseJoinColumns = {
             @JoinColumn(name = "AUTHORITY_ID", referencedColumnName = "ID")})

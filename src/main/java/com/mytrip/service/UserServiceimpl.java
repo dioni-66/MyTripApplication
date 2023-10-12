@@ -1,5 +1,7 @@
 package com.mytrip.service;
 
+import com.mytrip.configuration.security.CustomMd5PasswordEncoder;
+import com.mytrip.entity.AuthorityEntity;
 import com.mytrip.entity.UserEntity;
 import com.mytrip.pojo.ApplicationUserDetails;
 import com.mytrip.request.CreateUserRequestDTO;
@@ -16,6 +18,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.Date;
+import java.util.List;
 
 @Service
 @Transactional
@@ -29,6 +32,9 @@ public class UserServiceimpl implements UserService {
      */
     @Autowired
     private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private CustomMd5PasswordEncoder md5PasswordEncoder;
 
     /**
      * Get <code>UserDetails</code> for authentication details for a specific
@@ -55,7 +61,24 @@ public class UserServiceimpl implements UserService {
 
     @Override
     public CreateUserResponseDTO createUser(CreateUserRequestDTO createUserRequestDTO) {
-        return null;
+        UserEntity userEntity = new UserEntity();
+        userEntity.setEnabled(createUserRequestDTO.isEnabled());
+        userEntity.setUsername(createUserRequestDTO.getUsername());
+        userEntity.setFirstname(createUserRequestDTO.getFirstname());
+        userEntity.setEmail(createUserRequestDTO.getEmail());
+        userEntity.setLastname(createUserRequestDTO.getLastname());
+        //encode password with MD5
+        String encodedPassword = md5PasswordEncoder.encode(createUserRequestDTO.getPassword());
+        userEntity.setPassword(encodedPassword);
+        em.persist(userEntity);
+
+        //set ROLE_USER to new user
+        TypedQuery<AuthorityEntity> authorityEntityTypedQuery = em.createNamedQuery("AuthorityEntity.findByName", AuthorityEntity.class);
+        authorityEntityTypedQuery.setParameter("name", "ROLE_USER");
+        final AuthorityEntity authorityEntity = authorityEntityTypedQuery.getSingleResult();
+        userEntity.setAuthorities(List.of(authorityEntity));
+
+        return new CreateUserResponseDTO("User created successfully");
     }
 
 

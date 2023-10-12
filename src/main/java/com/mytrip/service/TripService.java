@@ -3,7 +3,7 @@ package com.mytrip.service;
 import com.mytrip.request.ApproveTripRequestDTO;
 import com.mytrip.request.CreateTripRequestDTO;
 import com.mytrip.request.DeleteTripRequestDTO;
-import com.mytrip.request.UpdateTripRequestDTO;
+import com.mytrip.request.FilterTripsRequestDTO;
 import com.mytrip.response.*;
 
 public interface TripService {
@@ -19,4 +19,6 @@ public interface TripService {
     ApproveTripResponseDTO approveTrip(ApproveTripRequestDTO approveTripRequestDTO);
 
     UpdateTripResponseDTO addFlight(int id, int flightId);
+
+    FilterTripsResponseDTO filterTrips(FilterTripsRequestDTO filterTripsRequestDTO);
 }

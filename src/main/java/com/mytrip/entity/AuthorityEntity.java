@@ -5,6 +5,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "authority")
+@NamedQuery(name = "AuthorityEntity.findByName", query = "SELECT a FROM AuthorityEntity a WHERE a.name =: name")
 public class AuthorityEntity {
     private long id;
     private String name;

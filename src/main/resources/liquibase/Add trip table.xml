@@ -38,8 +38,8 @@
                                   trip_description varchar(255),
                                   trip_from varchar(50),
                                   trip_to varchar(50),
-                                  departure_date date,
-                                  arrival_date date,
+                                  departure_date timestamp,
+                                  arrival_date timestamp,
                                   status_id int,
                                   foreign key (reason_id) references trip_reason (id),
                                   foreign key (status_id) references trip_status (id)
